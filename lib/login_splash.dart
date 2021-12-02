@@ -30,7 +30,7 @@ class _carbnbState extends State<carbnb> {
                   ),
                 ),
                 Column(
-                  // mainAxisAlignment: MainAxisAlignment.,
+                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                         margin: EdgeInsets.all(10),
