@@ -1,27 +1,23 @@
+import 'package:carbnb/logingpageform.dart';
 import 'package:flutter/material.dart';
 import 'login_splash.dart';
-import 'logingpageform.dart';
-
-
-import 'package:carbnb/page1.dart';
-import 'logingpageform.dart';
+import 'login_page.dart';
 
 void main() {
-  runApp(logingpageform());
+  // runApp(LoginPage());
+  runApp(const MainApp());
 }
 
-// class carbnb extends StatefulWidget {
-//   const carbnb({Key? key}) : super(key: key);
-//
-//   @override
-//   _carbnbState createState() => _carbnbState();
-// }
-//
-// class _carbnbState extends State<carbnb> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return logingpageform();
-//   }
-// }
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
-
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Rent A Car',
+      theme: ThemeData(primarySwatch: Colors.blue),
+      home: const LoginPage(),
+    );
+  }
+}

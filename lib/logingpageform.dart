@@ -10,76 +10,73 @@ class logingpageform extends StatefulWidget {
 class _logingpageformState extends State<logingpageform> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // resizeToAvoidBottomInset: true,
-
-      backgroundColor: Colors.grey,
-      appBar: AppBar(
-        title: const Text('Registration'),
+    return MaterialApp(
+      theme: ThemeData(appBarTheme:AppBarTheme(backgroundColor: Color(
+          0xff021127)),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
+      home: Scaffold(
+        backgroundColor: Colors.grey,
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          title: Text('Registration'),
+        ),
+
+        body: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              child: const Text(
-                'Welcome,     ',
-                style: TextStyle(fontSize: 60),
-              ),
+              child: Text('Welcome,     '
+                  ,style: TextStyle(fontSize: 60),),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
+
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Name',
-                    hintText: ' Last Name'),
+                    hintText: ' Last Name'
+                ),
               ),
             ),
-            const Padding(
+
+            Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
+
                 cursorColor: Colors.white,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'User Name',
-                    hintText: 'Enter valid mail id as abc@gmail.com'),
+                    hintText: 'Enter valid mail id as abc@gmail.com'
+                ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.all(10),
-              child: TextField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Password',
-                    hintText: 'Enter your secure password'),
-              ),
-            ),
-            const Padding(
+      Padding(
+        padding: EdgeInsets.all(10),
+        child: TextField(
+          obscureText: true,
+          decoration: InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'Password',
+              hintText: 'Enter your secure password'
+          ),
+        ),
+      ),
+            Padding(
               padding: EdgeInsets.all(10),
               child: TextField(
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Confirm Password',
-                    hintText: 'Enter your secure password'),
+                    hintText: 'Enter your secure password'
+                ),
               ),
             ),
-            // Container(
-            //   child:
-            ElevatedButton(
-              onPressed: () {
-                print('submit');
-              },
-              child: const Text('submit'),
-            ),
-            // )
+            Container(child: ElevatedButton(onPressed: () { print('submit'); }, child: Text('submit'),),)
           ],
         ),
-      ),
-    );
+      ),);
   }
 }
