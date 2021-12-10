@@ -16,7 +16,7 @@ class _logingpageformState extends State<logingpageform> {
       ),
       home: Scaffold(
         backgroundColor: Colors.grey,
-
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           title: Text('Registration'),
         ),
