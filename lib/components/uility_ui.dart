@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:carbnb/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -213,3 +211,18 @@ class ReusableCard extends StatelessWidget {
     );
   }
 }
+
+List<Widget> homeActions = <Widget>[
+  IconButton(
+      onPressed: () {
+        //WILL CONTROL API QUERY FROM HERE SOMEHOW
+        print('ADD SORTING');
+      },
+      icon: const Icon(
+        Icons.sort,
+        size: 40,
+      ))
+];
+
+Image homeLeading = const Image(image: AssetImage('assets/images/menu_icon.jpg'));
+

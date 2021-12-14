@@ -8,20 +8,6 @@ Color grayshade = const Color(0xFF9FA4AF);
 Color lightblue = const Color(0xFF4B68D1);
 Color blackshade = const Color(0xFF555555);
 Color defaultColor = const Color(0xff021127);
-final Map<int, Color> _defaultColorMap = {
-  50: const Color(0xff021127).withOpacity(0.5),
-  100: const Color(0xff021127).withOpacity(0.5),
-  200: const Color(0xff021127).withOpacity(0.5),
-  300: const Color(0xff021127).withOpacity(0.5),
-  400: const Color(0xff021127).withOpacity(0.5),
-  500: const Color(0xff021127).withOpacity(0.5),
-  600: const Color(0xff021127).withOpacity(0.5),
-  700: const Color(0xff021127).withOpacity(0.5),
-  800: const Color(0xff021127).withOpacity(0.5),
-  900: const Color(0xff021127).withOpacity(0.5),
-};
-
-final MaterialColor defaultColorSwatch = MaterialColor(100, _defaultColorMap);
 
 String carAPIData = '''
   [
@@ -75,4 +61,43 @@ String carAPIData = '''
   }
 ]
 ''';
+
+String insuranceAPIData = '''
+  [
+  {
+    "id": "is1",
+    "phone_no": "1-855-789-9092",
+    "image_url": "https://img1.pnghut.com/t/5/4/3/aCDtb3nXhv/insurance-brand-home-ecommerce-payment-system-personal-company.jpg",
+    "brand": "AVIVA",
+    "description" : "cheap and affordable",
+    "hours" : "Mon — Fri 8:00 AM — 8:00 PM",
+    "monthly_price" : "\$275.00",
+    "yearly_price" : "\$3300.00",
+    "reference_number" : "Q015985499"
+  },
+  {
+    "id": "is2",
+    "phone_no": "1-855-789-9092",
+    "image_url": "https://mma.prnewswire.com/media/1579186/Echelon_Fit_Logo.jpg?p=facebook",
+    "brand": "Echelon",
+    "description" : "best value for money",
+    "hours" : "Mon — Fri 8:00 AM — 8:00 PM",
+    "monthly_price" : "\$546.00",
+    "yearly_price" : "\$6552.00",
+     "reference_number" : "Q1243223332"
+  },
+  {
+    "id": "is2",
+    "phone_no": "1-855-789-9092",
+    "image_url": "https://mma.prnewswire.com/media/1579186/Echelon_Fit_Logo.jpg?p=facebook",
+    "brand": "Echelon",
+    "description" : "best value for money",
+    "hours" : "Mon — Fri 8:00 AM — 8:00 PM",
+    "monthly_price" : "\$546.00",
+    "yearly_price" : "\$6552.00",
+     "reference_number" : "Q1243223331"
+  }
+]
+''';
+
 String apiUrl = "https://dummy-domain/api/available_cars?offset=";
