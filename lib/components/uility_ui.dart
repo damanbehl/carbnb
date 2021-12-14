@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:carbnb/constant.dart';
 import 'package:flutter/material.dart';
 
@@ -108,9 +110,9 @@ class _InputFieldPasswordState extends State<InputFieldPassword> {
 }
 
 class TopText extends StatelessWidget {
-  String text;
+  final String text;
 
-  TopText({Key? key, required this.text}) : super(key: key);
+  const TopText({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +179,37 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
                   TextStyle(color: grayshade.withOpacity(0.8), fontSize: 16)))
         ],
       ),
+    );
+  }
+}
+
+class ReusableCard extends StatelessWidget {
+  const ReusableCard(
+      {Key? key,
+      required this.child,
+      required this.margin,
+      required this.padding,
+      required this.cardBGColor,
+      required this.circularRadius})
+      : super(key: key);
+
+  final Widget child;
+  final Map<String, double> margin;
+  final double padding;
+  final Color cardBGColor;
+  final double circularRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: EdgeInsets.all(margin),
+      margin: EdgeInsets.fromLTRB(
+          margin["left"]!, margin["top"]!, margin["right"]!, margin["bottom"]!),
+      padding: EdgeInsets.all(padding),
+      child: child,
+      decoration: BoxDecoration(
+          color: cardBGColor,
+          borderRadius: BorderRadius.circular(circularRadius)),
     );
   }
 }
