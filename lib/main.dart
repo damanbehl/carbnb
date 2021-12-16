@@ -4,6 +4,7 @@ import 'login_splash.dart';
 import 'login_page.dart';
 import 'constant.dart' as constant;
 import 'home_screen.dart';
+import 'insurance_page.dart';
 
 void main() {
   // runApp(LoginPage());
@@ -21,9 +22,9 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         colorScheme:
-            ColorScheme.light().copyWith(primary: constant.defaultColor),
+            const ColorScheme.light().copyWith(primary: constant.defaultColor),
       ),
-      home: const HomeScreen(),
+      home: const InsurancePage(),
     );
   }
 }

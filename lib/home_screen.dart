@@ -4,6 +4,9 @@ import 'dart:convert' as convert;
 import 'package:flutter/material.dart';
 import 'constant.dart' as constant;
 import 'components/car_elem.dart';
+import 'components/uility_ui.dart' as utilUI;
+
+import 'components/common_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -40,19 +43,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: const Image(image: AssetImage('assets/images/menu_icon.jpg')),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                //WILL CONTROL API QUERY FROM HERE SOMEHOW
-                print('ADD SORTING');
-              },
-              icon: const Icon(
-                Icons.sort,
-                size: 40,
-              ))
-        ],
+      appBar: CommonAppBar(
+        leading: utilUI.homeLeading,
+        title: const Text(""),
+        appBar: AppBar(),
+        actions: utilUI.homeActions,
       ),
       body: Container(
         child: _buildList(),
