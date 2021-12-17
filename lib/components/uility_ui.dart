@@ -108,9 +108,9 @@ class _InputFieldPasswordState extends State<InputFieldPassword> {
 }
 
 class TopText extends StatelessWidget {
-  String text;
+  final String text;
 
-  TopText({Key? key, required this.text}) : super(key: key);
+  const TopText({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -180,3 +180,49 @@ class _CustomCheckBoxState extends State<CustomCheckBox> {
     );
   }
 }
+
+class ReusableCard extends StatelessWidget {
+  const ReusableCard(
+      {Key? key,
+      required this.child,
+      required this.margin,
+      required this.padding,
+      required this.cardBGColor,
+      required this.circularRadius})
+      : super(key: key);
+
+  final Widget child;
+  final Map<String, double> margin;
+  final double padding;
+  final Color cardBGColor;
+  final double circularRadius;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      // margin: EdgeInsets.all(margin),
+      margin: EdgeInsets.fromLTRB(
+          margin["left"]!, margin["top"]!, margin["right"]!, margin["bottom"]!),
+      padding: EdgeInsets.all(padding),
+      child: child,
+      decoration: BoxDecoration(
+          color: cardBGColor,
+          borderRadius: BorderRadius.circular(circularRadius)),
+    );
+  }
+}
+
+List<Widget> homeActions = <Widget>[
+  IconButton(
+      onPressed: () {
+        //WILL CONTROL API QUERY FROM HERE SOMEHOW
+        print('ADD SORTING');
+      },
+      icon: const Icon(
+        Icons.sort,
+        size: 40,
+      ))
+];
+
+Image homeLeading = const Image(image: AssetImage('assets/images/menu_icon.jpg'));
+
