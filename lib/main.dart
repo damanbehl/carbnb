@@ -1,6 +1,7 @@
 import 'package:carbnb/logingpageform.dart';
 import 'package:carbnb/paymentmethod.dart';
 import 'package:carbnb/news_page.dart';
+import 'package:carbnb/productviewpage.dart';
 import 'package:flutter/material.dart';
 import 'login_splash.dart';
 import 'login_page.dart';
