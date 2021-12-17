@@ -118,7 +118,9 @@ class _NewsPageState extends State<NewsPage> {
                 height: 40,
                 child: ElevatedButton(
                   child: const Text("Search"),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/search');
+                  },
                 )),
             Positioned(
               bottom: 150,
