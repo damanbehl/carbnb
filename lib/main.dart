@@ -1,7 +1,10 @@
 import 'package:carbnb/logingpageform.dart';
+import 'package:carbnb/paymentmethod.dart';
 import 'package:flutter/material.dart';
 import 'login_splash.dart';
 import 'login_page.dart';
+import 'paymentconformation.dart';
+import 'productviewpage.dart';
 
 void main() {
   // runApp(LoginPage());
@@ -17,7 +20,7 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Rent A Car',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginPage(),
+      home: const productviewpage(),
     );
   }
 }
