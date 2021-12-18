@@ -18,12 +18,11 @@ class _paymentmethodState extends State<paymentmethod> {
   String cardHolderName = '';
   String cvvCode = '';
   bool cvvFocus = false;
-  bool chipvisible= true;
+  bool chipvisible = true;
   bool useGlassMorphism = false;
   bool useBackgroundImage = false;
   OutlineInputBorder? border;
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -32,31 +31,16 @@ class _paymentmethodState extends State<paymentmethod> {
         child: Stack(
           children: [
             Container(
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height,
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
               color: defaultColor,
             ),
             TopText(text: "Payment Method"),
             Positioned(
-              top: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.10,
+              top: MediaQuery.of(context).size.height * 0.10,
               child: Container(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.9,
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                height: MediaQuery.of(context).size.height * 0.9,
+                width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: whiteshade,
                     borderRadius: const BorderRadius.only(
@@ -71,8 +55,9 @@ class _paymentmethodState extends State<paymentmethod> {
                       isChipVisible: chipvisible,
                       cvvCode: cvvCode,
                       showBackView: cvvFocus,
-                      onCreditCardWidgetChange: (
-                          CreditCardBrand creditCardBrand) {},),
+                      onCreditCardWidgetChange:
+                          (CreditCardBrand creditCardBrand) {},
+                    ),
                     Expanded(
                       child: SingleChildScrollView(
                         child: Column(
@@ -94,15 +79,15 @@ class _paymentmethodState extends State<paymentmethod> {
                                 labelText: 'Number',
                                 hintText: 'XXXX XXXX XXXX XXXX',
                                 hintStyle: const TextStyle(color: Colors.black),
-                                labelStyle: const TextStyle(
-                                    color: Colors.black),
+                                labelStyle:
+                                    const TextStyle(color: Colors.black),
                                 focusedBorder: border,
                                 enabledBorder: border,
                               ),
                               expiryDateDecoration: InputDecoration(
                                 hintStyle: const TextStyle(color: Colors.black),
-                                labelStyle: const TextStyle(
-                                    color: Colors.black),
+                                labelStyle:
+                                    const TextStyle(color: Colors.black),
                                 focusedBorder: border,
                                 enabledBorder: border,
                                 labelText: 'Expired Date',
@@ -110,8 +95,8 @@ class _paymentmethodState extends State<paymentmethod> {
                               ),
                               cvvCodeDecoration: InputDecoration(
                                 hintStyle: const TextStyle(color: Colors.black),
-                                labelStyle: const TextStyle(
-                                    color: Colors.black),
+                                labelStyle:
+                                    const TextStyle(color: Colors.black),
                                 focusedBorder: border,
                                 enabledBorder: border,
                                 labelText: 'CVV',
@@ -119,8 +104,8 @@ class _paymentmethodState extends State<paymentmethod> {
                               ),
                               cardHolderDecoration: InputDecoration(
                                 hintStyle: const TextStyle(color: Colors.black),
-                                labelStyle: const TextStyle(
-                                    color: Colors.black),
+                                labelStyle:
+                                    const TextStyle(color: Colors.black),
                                 focusedBorder: border,
                                 enabledBorder: border,
                                 labelText: 'Card Holder',
@@ -145,10 +130,9 @@ class _paymentmethodState extends State<paymentmethod> {
                                   inactiveTrackColor: Colors.grey,
                                   activeColor: Colors.black,
                                   activeTrackColor: Colors.green,
-                                  onChanged: (bool value) =>
-                                      setState(() {
-                                        useGlassMorphism = value;
-                                      }),
+                                  onChanged: (bool value) => setState(() {
+                                    useGlassMorphism = value;
+                                  }),
                                 ),
                               ],
                             ),
@@ -167,10 +151,9 @@ class _paymentmethodState extends State<paymentmethod> {
                                   inactiveTrackColor: Colors.grey,
                                   activeColor: Colors.white,
                                   activeTrackColor: Colors.green,
-                                  onChanged: (bool value) =>
-                                      setState(() {
-                                        useBackgroundImage = value;
-                                      }),
+                                  onChanged: (bool value) => setState(() {
+                                    useBackgroundImage = value;
+                                  }),
                                 ),
                               ],
                             ),
@@ -198,8 +181,12 @@ class _paymentmethodState extends State<paymentmethod> {
                               ),
                               onPressed: () {
                                 if (formKey.currentState!.validate()) {
+                                  Navigator.pushNamed(
+                                      context, '/paymentConfirmation');
                                   print('valid!');
                                 } else {
+                                  Navigator.pushNamed(
+                                      context, '/paymentConfirmation');
                                   print('invalid!');
                                 }
                               },
@@ -214,10 +201,10 @@ class _paymentmethodState extends State<paymentmethod> {
             ),
           ],
         ),
-
       ),
     );
   }
+
   void onCreditCardModelChange(CreditCardModel? creditCardModel) {
     setState(() {
       cardNumber = creditCardModel!.cardNumber;

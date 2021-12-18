@@ -35,7 +35,7 @@ class _carbnbState extends State<carbnb> {
                         margin: EdgeInsets.all(10),
                         child: ElevatedButton(
                             onPressed: () {
-                              print('hello');
+                              Navigator.pushNamed(context, '/login');
                             },
                             style: ElevatedButton.styleFrom(
                                 fixedSize: Size(275, 50)),
@@ -51,7 +51,9 @@ class _carbnbState extends State<carbnb> {
                         margin: EdgeInsets.all(10),
                         color: Color(0xFF2A2E32),
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/signup');
+                          },
                           child: const Text('Sign Up',
                               style: TextStyle(fontSize: 20, letterSpacing: 2)),
                           style: ElevatedButton.styleFrom(

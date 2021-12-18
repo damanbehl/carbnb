@@ -40,12 +40,16 @@ class CarElem extends StatelessWidget {
           ButtonBar(
             children: [
               TextButton(
-                child: const Text('Contact Agent'),
-                onPressed: () {},
+                child: const Text('Select'),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/insurancePage');
+                },
               ),
               TextButton(
                 child: const Text('Learn More'),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/productPage');
+                },
               )
             ],
           )

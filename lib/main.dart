@@ -9,6 +9,7 @@ import 'constant.dart' as constant;
 import 'home_screen.dart';
 import 'paymentconformation.dart';
 import 'insurance_page.dart';
+import 'product_page.dart';
 
 void main() {
   // runApp(LoginPage());
@@ -25,16 +26,17 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const productviewpage(),
+        '/': (context) => const NewsPage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/search': (context) => const HomeScreen(),
         '/splash': (context) => const carbnb(),
-        '/login' : (context) => const LoginPage(),
+        '/login': (context) => const LoginPage(),
         '/paymentConfirmation': (context) => const PaymentConfirmation(),
         '/insurancePage': (context) => const InsurancePage(),
-        '/signup' : (context) => const logingpageform(),
-
-
+        '/signup': (context) => const logingpageform(),
+        '/productView': (context) => const productviewpage(),
+        '/paymentmethod': (context) => const paymentmethod(),
+        '/productPage': (context) => const ProductPage(),
       },
       title: 'Rent A Car',
       theme: ThemeData(
