@@ -25,7 +25,7 @@ class MainApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => const NewsPage(),
+        '/': (context) => const productviewpage(),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/search': (context) => const HomeScreen(),
         '/splash': (context) => const carbnb(),
