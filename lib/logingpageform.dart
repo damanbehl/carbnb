@@ -70,6 +70,7 @@ class _logingpageformState extends State<logingpageform> {
             Container(
               child: ElevatedButton(
                 onPressed: () {
+                  Navigator.pushNamed(context, '/paymentmethod');
                   print('submit');
                 },
                 child: Text('submit'),

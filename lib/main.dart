@@ -1,4 +1,5 @@
 import 'package:carbnb/logingpageform.dart';
+import 'package:carbnb/paymentmethod.dart';
 import 'package:carbnb/news_page.dart';
 import 'package:flutter/material.dart';
 import 'login_splash.dart';
@@ -7,6 +8,7 @@ import 'constant.dart' as constant;
 import 'home_screen.dart';
 import 'paymentconformation.dart';
 import 'insurance_page.dart';
+import 'product_page.dart';
 
 void main() {
   // runApp(LoginPage());
@@ -27,12 +29,12 @@ class MainApp extends StatelessWidget {
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/search': (context) => const HomeScreen(),
         '/splash': (context) => const carbnb(),
-        '/login' : (context) => const LoginPage(),
+        '/login': (context) => const LoginPage(),
         '/paymentConfirmation': (context) => const PaymentConfirmation(),
         '/insurancePage': (context) => const InsurancePage(),
-        '/signup' : (context) => const logingpageform(),
-
-
+        '/signup': (context) => const logingpageform(),
+        '/paymentmethod': (context) => const paymentmethod(),
+        '/productPage': (context) => const ProductPage(),
       },
       title: 'Rent A Car',
       theme: ThemeData(
