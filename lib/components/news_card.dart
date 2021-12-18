@@ -8,16 +8,16 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
-      children: const [
+      children: [
         utilUI.ReusableCard(
           padding: 0,
-          margin: {"left": 10, "right": 32, "bottom": 10, "top": 0},
+          margin: const {"left": 20, "right": 0, "bottom": 10, "top": 0},
           circularRadius: 15,
           cardBGColor: Colors.grey,
           child: SizedBox(
-            height: 150,
-            width: 150,
-            child: Image(
+            height: MediaQuery.of(context).size.height * 0.20,
+            width: MediaQuery.of(context).size.width * 0.30,
+            child: const Image(
               image: NetworkImage(
                   "https://cdn-icons-png.flaticon.com/512/55/55283.png"),
             ),
@@ -25,13 +25,13 @@ class NewsCard extends StatelessWidget {
         ),
         utilUI.ReusableCard(
           padding: 0,
-          margin: {"left": 10, "right": 30, "bottom": 10, "top": 0},
+          margin: {"left": MediaQuery.of(context).size.width*0.22, "right": 0, "bottom": 10, "top": 0},
           circularRadius: 15,
           cardBGColor: Colors.grey,
           child: SizedBox(
-            height: 140,
-            width: 140,
-            child: Image(
+            height: MediaQuery.of(context).size.height * 0.20,
+            width: MediaQuery.of(context).size.width * 0.30,
+            child: const Image(
               image: NetworkImage(
                   "https://cdn-icons-png.flaticon.com/512/55/55283.png"),
             ),
