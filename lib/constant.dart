@@ -8,6 +8,8 @@ Color grayshade = const Color(0xFF9FA4AF);
 Color lightblue = const Color(0xFF4B68D1);
 Color blackshade = const Color(0xFF555555);
 Color defaultColor = const Color(0xff021127);
+Color productBlack = const Color(0xFF2F2F3E);
+Color productBodyColor = const Color(0xFF6F8398);
 
 String carAPIData = '''
   [

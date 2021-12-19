@@ -78,6 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                         InkWell(
                           onTap: () {
                             //TODO: funcitonality
+                            Navigator.pushNamed(context, '/paymentmethod');
                             print("inkwell");
                           },
                           child: Container(

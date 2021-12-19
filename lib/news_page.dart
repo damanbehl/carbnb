@@ -4,6 +4,8 @@ import 'components/uility_ui.dart' as utilUI;
 import 'constant.dart' as constant;
 import 'dart:convert' as convert;
 import 'components/radio_button.dart' as RBD;
+import 'package:flutter/services.dart';
+
 
 class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
@@ -31,6 +33,10 @@ class _NewsPageState extends State<NewsPage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     return Scaffold(
         body: ListView(
       padding: const EdgeInsets.all(10),
@@ -39,7 +45,7 @@ class _NewsPageState extends State<NewsPage> {
           children: [
             Container(
               margin: const EdgeInsets.fromLTRB(0, 50, 0, 10),
-              height: MediaQuery.of(context).size.height * 0.75,
+              height: MediaQuery.of(context).size.height * 0.85,
               decoration: BoxDecoration(
                 color: constant.defaultColor,
                 image: const DecorationImage(
@@ -53,21 +59,21 @@ class _NewsPageState extends State<NewsPage> {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            const Positioned(
-              child: Text(
+            Positioned(
+              child: const Text(
                 "CARBNB",
                 style: TextStyle(
-                    fontSize: 30,
+                    fontSize: 25,
                     color: Colors.white,
                     fontWeight: FontWeight.bold),
               ),
-              top: 80,
+              top: MediaQuery.of(context).size.height * 0.15,
               right: 20,
             ),
             Positioned(
-                top: 80,
+                top: MediaQuery.of(context).size.height * 0.15,
                 left: 10,
-                width: 200,
+                width: MediaQuery.of(context).size.width * 0.50,
                 height: 40,
                 child: utilUI.ReusableCard(
                     padding: 10,
@@ -84,17 +90,19 @@ class _NewsPageState extends State<NewsPage> {
                       borderRadius: BorderRadius.circular(15),
                       child: const Text(
                         "Cars, Trucks and SUV's..",
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                            color: Colors.white,
+                            overflow: TextOverflow.ellipsis),
                       ),
                       onTap: () {
                         _openSelectionFilters(context);
                       },
                     ))),
             Positioned(
-                top: 120,
+                top: MediaQuery.of(context).size.height * 0.22,
                 // left: 20,
-                width: 400,
-                height: 200,
+                width: MediaQuery.of(context).size.width * 0.90,
+                height: MediaQuery.of(context).size.width * 0.50,
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     // shrinkWrap: true,
@@ -112,16 +120,18 @@ class _NewsPageState extends State<NewsPage> {
                       }
                     })),
             Positioned(
-                bottom: 80,
-                left: 80,
-                width: 200,
+                bottom: 30,
+                left: MediaQuery.of(context).size.width * 0.25,
+                width: MediaQuery.of(context).size.width * 0.40,
                 height: 40,
                 child: ElevatedButton(
                   child: const Text("Search"),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/search');
+                  },
                 )),
             Positioned(
-              bottom: 150,
+              bottom: MediaQuery.of(context).size.height * 0.13,
               child: const NewsCard(),
             )
           ],
