@@ -120,11 +120,15 @@ class TopText extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            Icons.arrow_back_sharp,
-            color: whiteshade,
-            size: 40,
-          ),
+          InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_sharp,
+                color: whiteshade,
+                size: 40,
+              )),
           const SizedBox(
             width: 15,
           ),
@@ -224,5 +228,5 @@ List<Widget> homeActions = <Widget>[
       ))
 ];
 
-Image homeLeading = const Image(image: AssetImage('assets/images/menu_icon.jpg'));
-
+Image homeLeading =
+    const Image(image: AssetImage('assets/images/menu_icon.jpg'));

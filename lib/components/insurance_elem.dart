@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:carbnb/screen_arguments/insurance_screen_args.dart';
 
 class InsuranceElem extends StatelessWidget {
   final String imageUrl;
@@ -51,7 +52,11 @@ class InsuranceElem extends StatelessWidget {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     textStyle: const TextStyle(fontSize: 20)),
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/insuranceDetails',
+                      arguments:
+                          InsuranceScreenArgs(brand, description, imageUrl));
+                },
                 child: const Text("Read More"),
               ),
               Padding(
