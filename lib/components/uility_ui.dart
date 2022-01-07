@@ -5,12 +5,14 @@ class InputField extends StatelessWidget {
   String headerText;
   String hintTexti;
   Color textColor;
+  Function onChange;
 
   InputField(
       {Key? key,
       required this.headerText,
       required this.hintTexti,
-      required this.textColor})
+      required this.textColor,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -34,6 +36,9 @@ class InputField extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: TextField(
+              onChanged: (value) {
+                onChange(value);
+              },
               decoration: InputDecoration(
                   hintText: hintTexti, border: InputBorder.none),
             ),
@@ -48,12 +53,14 @@ class InputFieldPassword extends StatefulWidget {
   String headerText;
   String hintTexti;
   Color textColor;
+  Function onChange;
 
   InputFieldPassword(
       {Key? key,
       required this.headerText,
       required this.hintTexti,
-      required this.textColor})
+      required this.textColor,
+      required this.onChange})
       : super(key: key);
 
   @override
@@ -84,9 +91,12 @@ class _InputFieldPasswordState extends State<InputFieldPassword> {
               color: grayshade.withOpacity(0.5),
               borderRadius: BorderRadius.circular(15)),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
             child: TextField(
               obscureText: _visible,
+              onChanged: (value) {
+                widget.onChange(value);
+              },
               decoration: InputDecoration(
                   hintText: widget.hintTexti,
                   border: InputBorder.none,

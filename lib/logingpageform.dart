@@ -18,6 +18,11 @@ class _logingpageformState extends State<logingpageform> {
   String password = "";
   String name = "";
   bool isloading = false;
+  bool isEmailPristine = true;
+  bool isPasswordPristine = true;
+  bool isNamePristine = true;
+  bool isCnfmPassPristine = true;
+  String cnfmPass = "";
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,10 @@ class _logingpageformState extends State<logingpageform> {
                                   child: TextFormField(
                                     keyboardType: TextInputType.name,
                                     onChanged: (value) {
-                                      name = value.toString().trim();
+                                      setState(() {
+                                        isNamePristine = false;
+                                        name = value.toString().trim();
+                                      });
                                     },
                                     validator: (value) => (value!.isEmpty)
                                         ? ' Please enter name'
@@ -69,13 +77,25 @@ class _logingpageformState extends State<logingpageform> {
                                         hintText: 'Name'),
                                   ),
                                 ),
+                                (!isNamePristine && name.isEmpty)
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                          'Name cannot be empty',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: TextFormField(
                                     keyboardType: TextInputType.emailAddress,
                                     cursorColor: Colors.white,
                                     onChanged: (value) {
-                                      email = value.toString().trim();
+                                      setState(() {
+                                        isEmailPristine = false;
+                                        email = value.toString().trim();
+                                      });
                                     },
                                     validator: (value) => (value!.isEmpty &&
                                             UUI.isEmailValid(value))
@@ -88,6 +108,15 @@ class _logingpageformState extends State<logingpageform> {
                                             'Enter valid mail id as abc@gmail.com'),
                                   ),
                                 ),
+                                (!isEmailPristine && !UUI.isEmailValid(email))
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                          'Email is not valid',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: TextFormField(
@@ -98,7 +127,10 @@ class _logingpageformState extends State<logingpageform> {
                                       }
                                     },
                                     onChanged: (value) {
-                                      password = value;
+                                      setState(() {
+                                        isPasswordPristine = false;
+                                        password = value;
+                                      });
                                     },
                                     obscureText: true,
                                     decoration: const InputDecoration(
@@ -107,9 +139,25 @@ class _logingpageformState extends State<logingpageform> {
                                         hintText: 'Enter your secure password'),
                                   ),
                                 ),
+                                (!isPasswordPristine &&
+                                        !UUI.validatePssword(password))
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                          'password is not valid\nPlease enter an alphanumeric 8 length Password',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: TextFormField(
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isCnfmPassPristine = false;
+                                        cnfmPass = value;
+                                      });
+                                    },
                                     obscureText: true,
                                     validator: (value) {
                                       if (value!.isEmpty && value != password) {
@@ -122,11 +170,18 @@ class _logingpageformState extends State<logingpageform> {
                                         hintText: 'Enter your secure password'),
                                   ),
                                 ),
+                                (!isCnfmPassPristine && password != cnfmPass)
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(5),
+                                        child: Text(
+                                          'Passwords do not match',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
+                                      )
+                                    : const SizedBox.shrink(),
                                 ElevatedButton(
-                                  onPressed: () async {
-                                    await onRegister();
-                                    Navigator.pushNamed(
-                                        context, '/paymentmethod');
+                                  onPressed: () {
+                                    onRegister();
                                     print('submit');
                                   },
                                   child: const Text('submit'),
@@ -142,6 +197,7 @@ class _logingpageformState extends State<logingpageform> {
 
   Future onRegister() async {
     if (formkey.currentState!.validate()) {
+      print("ever went inside");
       setState(() {
         isloading = true;
       });
@@ -156,7 +212,7 @@ class _logingpageformState extends State<logingpageform> {
           ),
           duration: Duration(seconds: 5),
         ));
-        Navigator.of(context).pop();
+        Navigator.pushNamed(context, '/login');
         setState(() {
           isloading = false;
         });
