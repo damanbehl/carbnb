@@ -6,7 +6,6 @@ import 'dart:convert' as convert;
 import 'components/radio_button.dart' as RBD;
 import 'package:flutter/services.dart';
 
-
 class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
 

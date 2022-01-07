@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "334459614551",
+    "project_id": "carbnb-cf74d",
+    "storage_bucket": "carbnb-cf74d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:334459614551:android:4706dc1310e93b238e3a12",
+        "android_client_info": {
+          "package_name": "com.dreamteam.carbnb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "334459614551-j017ort85jeovoubgqkcgp19lj6rbsbk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dreamteam.carbnb",
+            "certificate_hash": "be97be036f1cea4886ba360d7ce39a0ccedfb099"
+          }
+        },
+        {
+          "client_id": "334459614551-utak3bfb0qcopnlpf7lh7esqv6g1emh8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDPQwPC1WSZBKzalrCfGLd16d-oDFQYE20"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "334459614551-utak3bfb0qcopnlpf7lh7esqv6g1emh8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
