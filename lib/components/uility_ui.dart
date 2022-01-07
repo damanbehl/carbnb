@@ -230,3 +230,16 @@ List<Widget> homeActions = <Widget>[
 
 Image homeLeading =
     const Image(image: AssetImage('assets/images/menu_icon.jpg'));
+
+bool isEmailValid(String email) {
+  return RegExp(
+          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+      .hasMatch(email);
+}
+
+bool validatePssword(String value) {
+  String pattern =
+      r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$';
+  RegExp regExp = new RegExp(pattern);
+  return regExp.hasMatch(value);
+}

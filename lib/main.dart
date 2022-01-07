@@ -12,9 +12,11 @@ import 'product_page.dart';
 import 'user_profile.dart';
 import 'main_home_page.dart';
 import 'car_insurance_details.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  // runApp(LoginPage());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MainApp());
 }
 

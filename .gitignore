@@ -26,7 +26,7 @@
 .pub-cache/
 .pub/
 /build/
-
+.flutter-plugins-dependencies
 # Android related
 **/android/**/gradle-wrapper.jar
 **/android/.gradle
@@ -61,3 +61,7 @@
 **/ios/Flutter/flutter_assets/
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
+
+
+# Web related
+lib/generated_plugin_registrant.dart
