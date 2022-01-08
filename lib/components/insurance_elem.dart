@@ -65,7 +65,8 @@ class InsuranceElem extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20)),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/splash');
+                    Navigator.pushNamed(context, '/splash',
+                        arguments: {"direction": "forward"});
                   },
                   child: const Text("Select"),
                 ),

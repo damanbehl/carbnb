@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'constant.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:carbnb/components/uility_ui.dart' as UUI;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class logingpageform extends StatefulWidget {
   const logingpageform({Key? key}) : super(key: key);
@@ -23,6 +24,22 @@ class _logingpageformState extends State<logingpageform> {
   bool isNamePristine = true;
   bool isCnfmPassPristine = true;
   String cnfmPass = "";
+
+  @override
+  void initState() {
+    super.initState();
+    print("came to initialize state in splash page");
+    checkIfLoggedIn();
+  }
+
+  void checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("came here line no 36");
+    if (prefs.getBool('isLoggedIn') ?? false) {
+      print('popping every time');
+      Navigator.pop(context);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +229,7 @@ class _logingpageformState extends State<logingpageform> {
           ),
           duration: Duration(seconds: 5),
         ));
-        Navigator.pushNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, '/login');
         setState(() {
           isloading = false;
         });
