@@ -6,7 +6,7 @@ class carbnb extends StatefulWidget {
   @override
   _carbnbState createState() => _carbnbState();
 }
-
+//splash screen for carbnb
 class _carbnbState extends State<carbnb> {
   @override
   Widget build(BuildContext context) {
