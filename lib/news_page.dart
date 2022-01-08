@@ -167,6 +167,7 @@ class _NewsPageState extends State<NewsPage> {
   void _getMoreData() async {
     // print('inside get more data');
     if (!isLoading) {
+      if (!mounted) return;
       setState(() {
         isLoading = true;
       });
@@ -178,6 +179,7 @@ class _NewsPageState extends State<NewsPage> {
             convert.jsonDecode(response["body"]) as List<dynamic>;
         // print("Type of response after decoding is >" +
         //     responseData.runtimeType.toString());
+        if (!mounted) return;
         setState(() {
           isLoading = false;
           cars.addAll(responseData);

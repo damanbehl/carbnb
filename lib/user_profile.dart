@@ -1,9 +1,34 @@
 import 'package:carbnb/components/common_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class UserProfile extends StatelessWidget {
+class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
+
+  @override
+  _UserProfileState createState() => _UserProfileState();
+}
+
+class _UserProfileState extends State<UserProfile> {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  bool isLoggedIn = false;
+
+  _signOut() async {
+    await _firebaseAuth.signOut();
+  }
+
+  @override
+  void initState() {
+    print("initializing state in userprofile user status" +
+        (_firebaseAuth.currentUser.toString() != null).toString());
+    setState(() {
+      isLoggedIn = _firebaseAuth.currentUser != null;
+    });
+    print("Initializing isLoggedIn as> " + isLoggedIn.toString());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +77,31 @@ class UserProfile extends StatelessWidget {
               ),
             ),
             flex: 6,
-          )
+          ),
+          Expanded(
+              child: SizedBox(
+            height: MediaQuery.of(context).size.width * 0.10,
+            width: MediaQuery.of(context).size.width * 0.80,
+            child: ElevatedButton(
+              child: Text(isLoggedIn ? 'Logout' : 'Login'),
+              onPressed: () async {
+                print(isLoggedIn);
+                if (!isLoggedIn) {
+                  print("inside to navigate to login");
+                  Navigator.pushNamed(context, "/login",
+                      arguments: {"source": "profile_page"});
+                } else {
+                  await _signOut();
+                  if (_firebaseAuth.currentUser == null) {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setBool('isLoggedIn', false);
+                    Navigator.pushNamed(context, "/");
+                  }
+                }
+              },
+            ),
+          ))
         ],
       ),
     );
