@@ -62,7 +62,8 @@ class CarInsuranceDescription extends StatelessWidget {
                               child: _getButton(
                                   buttonText: 'Select',
                                   onTap: () {
-                                    Navigator.pushNamed(context, '/splash');
+                                    Navigator.pushNamed(context, '/splash',
+                                        arguments: {"direction": "forward"});
                                   }),
                               flex: 1,
                             ),

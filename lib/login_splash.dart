@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class carbnb extends StatefulWidget {
   const carbnb({Key? key}) : super(key: key);
@@ -8,6 +9,27 @@ class carbnb extends StatefulWidget {
 }
 
 class _carbnbState extends State<carbnb> {
+  @override
+  void initState() {
+    print("inside init state for splash");
+    checkIfLoggedIn();
+    super.initState();
+  }
+
+  void checkIfLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    print(args["direction"]);
+    if ((prefs.getBool('isLoggedIn') ?? false) &&
+        args["direction"] == "forward") {
+      Navigator.pushReplacementNamed(context, '/paymentmethod');
+    } else if ((prefs.getBool('isLoggedIn') ?? false)) {
+      print("was the insurance page pushed");
+      Navigator.pushReplacementNamed(context, '/insurancePage');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +57,8 @@ class _carbnbState extends State<carbnb> {
                         margin: EdgeInsets.all(10),
                         child: ElevatedButton(
                             onPressed: () {
-                              Navigator.pushNamed(context, '/login');
+                              Navigator.pushNamed(context, '/login',
+                                  arguments: {"source": "splash"});
                             },
                             style: ElevatedButton.styleFrom(
                                 fixedSize: Size(275, 50)),

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'constant.dart';
 import 'components/uility_ui.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -20,6 +21,30 @@ class _LoginPageState extends State<LoginPage> {
   String password = "";
   bool isEmailPristine = true;
   bool isPasswordPristine = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      checkIfLoggedIn();
+    });
+  }
+
+  void checkIfLoggedIn() async {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    print("inside login page func line 33 " +
+        prefs.getBool('isLoggedIn').toString());
+    if ((prefs.getBool('isLoggedIn') ?? false) &&
+        args["direction"] == "reverse") {
+      print("always popping if loggedin");
+      // Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, "/insuranceDetails");
+    } else if (prefs.getBool('isLoggedIn') ?? false) {
+      Navigator.pushReplacementNamed(context, "/paymentmethod");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -190,9 +215,17 @@ class _LoginPageState extends State<LoginPage> {
         isLoading = false;
       });
       try {
+        final args =
+            ModalRoute.of(context)!.settings.arguments as Map<String, String>;
         await _auth.signInWithEmailAndPassword(
             email: email, password: password);
-        Navigator.pushReplacementNamed(context, '/paymentmethod');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('isLoggedIn', true);
+        if (args["source"] == "profile_page") {
+          Navigator.pushReplacementNamed(context, '/userProfile');
+        } else {
+          Navigator.pushReplacementNamed(context, '/paymentmethod');
+        }
         setState(() {
           isLoading = false;
         });
