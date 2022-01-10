@@ -253,3 +253,7 @@ bool validatePssword(String value) {
   RegExp regExp = new RegExp(pattern);
   return regExp.hasMatch(value);
 }
+
+String generateImageUrl(String imageName) {
+  return "https://firebasestorage.googleapis.com/v0/b/carbnb-cf74d.appspot.com/o/cars%2F$imageName?alt=media&token=$storageKey";
+}

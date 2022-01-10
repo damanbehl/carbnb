@@ -1,6 +1,6 @@
 import 'package:carbnb/components/common_appbar.dart';
 import 'package:flutter/material.dart';
-import 'screen_arguments/insurance_screen_args.dart';
+import 'data_model/insurance_screen_args.dart';
 
 class CarInsuranceDescription extends StatelessWidget {
   const CarInsuranceDescription({Key? key}) : super(key: key);
@@ -42,6 +42,10 @@ class CarInsuranceDescription extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 30.0),
                       ),
                       Text(args.description),
+                      Text("Price\$ \t" + args.price, style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20
+                      ),),
                       const Spacer(),
                       Row(
                           mainAxisSize: MainAxisSize.max,

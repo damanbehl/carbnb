@@ -5,13 +5,15 @@ class CarElem extends StatelessWidget {
   final String subHeading;
   final String cardImage;
   final String supportingText;
+  final String id;
 
   const CarElem(
       {Key? key,
       required this.heading,
       required this.subHeading,
       required this.cardImage,
-      required this.supportingText})
+      required this.supportingText,
+      required this.id})
       : super(key: key);
 
   @override
@@ -42,13 +44,15 @@ class CarElem extends StatelessWidget {
               TextButton(
                 child: const Text('Select'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/insurancePage');
+                  Navigator.pushNamed(context, '/insurancePage',
+                      arguments: {"product_id": id});
                 },
               ),
               TextButton(
                 child: const Text('Learn More'),
                 onPressed: () {
-                  Navigator.pushNamed(context, '/productPage');
+                  Navigator.pushNamed(context, '/productPage',
+                      arguments: {"product_id": id});
                 },
               )
             ],

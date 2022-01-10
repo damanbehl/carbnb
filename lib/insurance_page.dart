@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:convert' as convert;
 import 'constant.dart' as constant;
 import 'components/insurance_elem.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'components/uility_ui.dart' as utilUI;
 
 class InsurancePage extends StatefulWidget {
   const InsurancePage({Key? key}) : super(key: key);
@@ -19,12 +21,12 @@ class _InsurancePageState extends State<InsurancePage> {
 
   @override
   void initState() {
-    _getMoreData(offset);
+    _getAPIData(0);
     super.initState();
     _sc.addListener(() {
       if (_sc.position.pixels == _sc.position.maxScrollExtent) {
         // print("am I constantly going to fetch data");
-        _getMoreData(offset);
+        _getAPIData(0);
       }
     });
   }
@@ -60,10 +62,11 @@ class _InsurancePageState extends State<InsurancePage> {
           return _buildProgressIndicator();
         } else {
           return InsuranceElem(
+              price: insuranceArr[index]["price"],
               imageUrl: insuranceArr[index]['image_url'],
               brand: insuranceArr[index]["brand"],
               description: insuranceArr[index]["description"],
-              key: Key(insuranceArr[index]["reference_number"]));
+              key: Key(insuranceArr[index]["_id"]));
         }
       },
       controller: _sc,
@@ -96,6 +99,41 @@ class _InsurancePageState extends State<InsurancePage> {
         print('Request failed with status: ${response["statusCode"]}.');
       }
     }
+  }
+
+  void _getAPIData(int offset) async {
+    try {
+      if (!isLoading) {
+        setState(() {
+          isLoading = true;
+        });
+        CollectionReference _collectionRef =
+            FirebaseFirestore.instance.collection('insurance');
+        QuerySnapshot querySnapshot = await _collectionRef.get();
+        // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        var singleElem;
+        final allData = querySnapshot.docs.map((doc) {
+          singleElem = doc.data() as Map<String, dynamic>;
+          singleElem["image_url"] =
+              utilUI.generateImageUrl(singleElem["imageString"]);
+          singleElem["_id"] = doc.reference.id;
+          return singleElem;
+        }).toList();
+        print(allData[0].toString());
+        setState(() {
+          isLoading = false;
+          insuranceArr.addAll(allData);
+          // offset = offset + 10;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    // Get data from docs and convert map to List
+    // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    // print(allData);
   }
 
   Widget _buildProgressIndicator() {

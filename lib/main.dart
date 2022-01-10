@@ -13,10 +13,13 @@ import 'user_profile.dart';
 import 'main_home_page.dart';
 import 'car_insurance_details.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    // options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MainApp());
 }
 

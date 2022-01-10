@@ -1,16 +1,19 @@
+import 'package:carbnb/paymentmethod.dart';
 import 'package:flutter/material.dart';
-import 'package:carbnb/screen_arguments/insurance_screen_args.dart';
+import 'package:carbnb/data_model/insurance_screen_args.dart';
 
 class InsuranceElem extends StatelessWidget {
   final String imageUrl;
   final String brand;
   final String description;
+  final String price;
 
   const InsuranceElem(
       {Key? key,
       required this.imageUrl,
       required this.brand,
-      required this.description})
+      required this.description,
+      required this.price})
       : super(key: key);
 
   @override
@@ -45,7 +48,10 @@ class InsuranceElem extends StatelessWidget {
             endIndent: 0,
             color: Colors.grey,
           ),
-          Text(description),
+          Text(
+            description,
+            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -54,8 +60,8 @@ class InsuranceElem extends StatelessWidget {
                     textStyle: const TextStyle(fontSize: 20)),
                 onPressed: () {
                   Navigator.pushNamed(context, '/insuranceDetails',
-                      arguments:
-                          InsuranceScreenArgs(brand, description, imageUrl));
+                      arguments: InsuranceScreenArgs(
+                          brand, description, imageUrl, price));
                 },
                 child: const Text("Read More"),
               ),

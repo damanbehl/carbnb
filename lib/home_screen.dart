@@ -1,11 +1,11 @@
 import 'dart:convert' as convert;
 
-// import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'constant.dart' as constant;
 import 'components/car_elem.dart';
 import 'components/uility_ui.dart' as utilUI;
-
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'components/common_appbar.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,13 +23,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    _getMoreData(offset);
+    _getAPIData(0);
+    // _getMoreData(offset);
     super.initState();
     print("going to initialize state");
 
     _sc.addListener(() {
       if (_sc.position.pixels == _sc.position.maxScrollExtent) {
-        _getMoreData(offset);
+        // _getMoreData(offset);
+        _getAPIData(0);
       }
     });
   }
@@ -66,10 +68,12 @@ class _HomeScreenState extends State<HomeScreen> {
           } else {
             print('Rendering');
             return CarElem(
+                key: Key(cars[index]['_id']),
+                id: cars[index]['_id'],
                 heading: cars[index]['name'],
-                subHeading: cars[index]['Brand'],
+                subHeading: cars[index]['brand'],
                 cardImage: cars[index]['image_url'],
-                supportingText: "Dummy Description");
+                supportingText: cars[index]['description']);
           }
         },
         controller: _sc);
@@ -82,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
         () => {"body": constant.carAPIData, "statusCode": "200"},
       );
 
-  // void _getMoreData(int offset) async {
+  // void _getAPData(int offset) async {
   //   if (!isLoading) {
   //     setState(() {
   //       isLoading = true;
@@ -103,6 +107,41 @@ class _HomeScreenState extends State<HomeScreen> {
   //     }
   //   }
   // }
+
+  void _getAPIData(int offset) async {
+    try {
+      if (!isLoading) {
+        setState(() {
+          isLoading = true;
+        });
+        CollectionReference _collectionRef =
+            FirebaseFirestore.instance.collection('cars');
+        QuerySnapshot querySnapshot = await _collectionRef.get();
+        // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        var singleElem;
+        final allData = querySnapshot.docs.map((doc) {
+          singleElem = doc.data() as Map<String, dynamic>;
+          singleElem["image_url"] =
+              utilUI.generateImageUrl(singleElem["main_image"]);
+          singleElem["_id"] = doc.reference.id;
+          return singleElem;
+        }).toList();
+        print(allData[0].toString());
+        setState(() {
+          isLoading = false;
+          cars.addAll(allData);
+          // offset = offset + 10;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    // Get data from docs and convert map to List
+    // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    // print(allData);
+  }
 
   void _getMoreData(int offset) async {
     // print('inside get more data');
