@@ -1,5 +1,8 @@
+import 'package:carbnb/components/uility_ui.dart';
 import 'package:flutter/material.dart';
 import 'constant.dart' as constant;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'data_model/product_model.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -9,7 +12,9 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
+  bool isLoading = false;
   List<Color> colors = [Colors.blue, Colors.green, Colors.yellow, Colors.pink];
+  var productData = {};
   List<String> imagePath = [
     "assets/images/mazdasix.jpg",
     "assets/images/mazdasixside.jpg",
@@ -20,18 +25,36 @@ class _ProductPageState extends State<ProductPage> {
   var isFavourite = false;
 
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () {
+      final args =
+          ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+      String productId = args["product_id"] ?? "";
+      getCar(productId);
+    });
+    // TODO: implement initState
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: SafeArea(
-      child: Column(
-        children: [
-          header(),
-          hero(),
-          Expanded(child: section()),
-          bottomButton()
-        ],
-      ),
-    ));
+    return isLoading
+        ? Center(
+            child: Opacity(
+                opacity: isLoading ? 1.0 : 0,
+                child: const CircularProgressIndicator()),
+          )
+        : Scaffold(
+            body: SafeArea(
+            child: Column(
+              children: [
+                header(),
+                hero(),
+                Expanded(child: section()),
+                bottomButton()
+              ],
+            ),
+          ));
   }
 
   Widget header() {
@@ -48,9 +71,9 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Column(
             children: [
-              Text("Premium Cars",
-                  style: TextStyle(fontWeight: FontWeight.w100, fontSize: 16)),
-              Text("Alfa Romeo",
+              Text(productData["type"] != null ? productData["type"] : "",
+                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+              Text(productData["type"] != null ? productData["name"] : "",
                   style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24))
             ],
           ),
@@ -68,7 +91,14 @@ class _ProductPageState extends State<ProductPage> {
     return Container(
       child: Stack(
         children: [
-          Image.asset(imagePath[colors.indexOf(selectedColor)]),
+          // Image.asset(imagePath[colors.indexOf(selectedColor)]),
+          productData["images_array"] != null
+              ? Image(
+                  image: NetworkImage(generateImageUrl(
+                      productData["images_array"]
+                          [colors.indexOf(selectedColor)])),
+                )
+              : CircularProgressIndicator(),
           Positioned(
               bottom: 10,
               right: 20,
@@ -98,11 +128,9 @@ class _ProductPageState extends State<ProductPage> {
       child: Column(
         children: [
           Text(
-            "Optional, Manufacturers locking wheel nuts \$71 OMVIC \$10 Environmental fee \$20 Federal air conditioning levy \$100"
-            " Included in selling price Selling price plus PPSA fee (lien registration) "
-            "HST & licensingBay Mazda is South-Eastern Ontarios number one Mazda dealer."
-            " We pride ourselves on customer service and the best experience you will have in"
-            " a car dealership anywhere. Try Bay Mazda today for your best selection of New Mazda vehicles. 60 Millennium Pkwy Belleville. ",
+            productData["description"] != null
+                ? productData["description"]
+                : "",
             textAlign: TextAlign.justify,
             style: TextStyle(
                 color: constant.productBodyColor, fontSize: 14, height: 1.5),
@@ -122,7 +150,7 @@ class _ProductPageState extends State<ProductPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Color",
+              Text("Image no",
                   style: TextStyle(
                       color: constant.productBlack,
                       fontWeight: FontWeight.bold,
@@ -133,7 +161,6 @@ class _ProductPageState extends State<ProductPage> {
                     4,
                     (index) => GestureDetector(
                           onTap: () {
-                            print("index $index clicked");
                             setState(() {
                               selectedColor = colors[index];
                             });
@@ -145,7 +172,9 @@ class _ProductPageState extends State<ProductPage> {
                             width: 34,
                             child: selectedColor == colors[index]
                                 ? Image.asset("assets/images/checker.png")
-                                : SizedBox(),
+                                : SizedBox(
+                                    child: Text(index.toString()),
+                                  ),
                             decoration: BoxDecoration(
                                 color: colors[index],
                                 borderRadius: BorderRadius.circular(17)),
@@ -189,13 +218,50 @@ class _ProductPageState extends State<ProductPage> {
                 "Add to WishList +",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               )),
-          ElevatedButton(onPressed: () {
-            Navigator.pushNamed(context, '/insurancePage');
-          }, child: Text("Rent This car")),
-          Text(r"$95",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 28))
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/insurancePage');
+              },
+              child: Text("Rent This car")),
+          Text(
+              productData["price_tag_line"] != null
+                  ? productData["price_tag_line"]
+                  : "",
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12))
         ],
       ),
     );
+  }
+
+  void getCar(String id) async {
+    var data;
+    try {
+      if (!isLoading) {
+        setState(() {
+          isLoading = true;
+        });
+        await FirebaseFirestore.instance
+            .collection('cars')
+            .doc(id)
+            .get()
+            .then((DocumentSnapshot documentSnapshot) {
+          if (documentSnapshot.exists) {
+            data = documentSnapshot.data();
+            // print("did the data model work" + data["name"]);
+            // print('Document data: ${documentSnapshot.data()}');
+          } else {
+            data = {"error": "document_id not found"};
+            print('Document does not exist on the database');
+          }
+        });
+        setState(() {
+          isLoading = false;
+          productData = data;
+          // offset = offset + 10;
+        });
+      }
+    } catch (e) {
+      print("error caught in catch line 236" + e.toString());
+    }
   }
 }

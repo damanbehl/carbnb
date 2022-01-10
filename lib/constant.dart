@@ -103,3 +103,5 @@ String insuranceAPIData = '''
 ''';
 
 String apiUrl = "https://dummy-domain/api/available_cars?offset=";
+
+String storageKey = "4b807f08-e615-451b-a5e0-85f13ee14c61";
