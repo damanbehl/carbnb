@@ -123,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
           singleElem = doc.data() as Map<String, dynamic>;
           singleElem["image_url"] =
               utilUI.generateImageUrl(singleElem["main_image"]);
-          singleElem["_id"] = doc.reference.id;
+          singleElem["_id"] = doc.reference.id.toString();
           return singleElem;
         }).toList();
         print(allData[0].toString());
