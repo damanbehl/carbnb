@@ -15,12 +15,6 @@ class _ProductPageState extends State<ProductPage> {
   bool isLoading = false;
   List<Color> colors = [Colors.blue, Colors.green, Colors.yellow, Colors.pink];
   var productData = {};
-  List<String> imagePath = [
-    "assets/images/mazdasix.jpg",
-    "assets/images/mazdasixside.jpg",
-    "assets/images/mazdasix_boot.jpg",
-    "assets/images/mazdasixback.jpg"
-  ];
   Color selectedColor = Colors.blue;
   var isFavourite = false;
 
