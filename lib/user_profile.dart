@@ -22,7 +22,10 @@ class _UserProfileState extends State<UserProfile> {
   @override
   void initState() {
     print("initializing state in userprofile user status" +
-        (_firebaseAuth.currentUser.toString() != null).toString());
+        (_firebaseAuth.currentUser != null).toString());
+    print(_firebaseAuth.currentUser);
+    // uid = _firebaseAuth.currentUser!.uid.toString();
+    // print(uid);
     setState(() {
       isLoggedIn = _firebaseAuth.currentUser != null;
     });
@@ -56,15 +59,24 @@ class _UserProfileState extends State<UserProfile> {
             child: Container(
               height: double.infinity,
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 40, left: 120),
+              padding: const EdgeInsets.only(top: 40, left: 20),
               color: Colors.red,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _getRowWidget(Icons.account_box_sharp, 'User Name'),
+                  _getRowWidget(
+                      Icons.account_box_sharp,
+                      (_firebaseAuth.currentUser != null
+                          ? _firebaseAuth.currentUser!.uid
+                          : "Not loggedin")),
                   const SizedBox(
                     height: 20,
                   ),
-                  _getRowWidget(Icons.mail, 'Email id'),
+                  _getRowWidget(
+                      Icons.mail,
+                      (_firebaseAuth.currentUser != null
+                          ? _firebaseAuth.currentUser!.email.toString()
+                          : "Not loggedin")),
                   const SizedBox(
                     height: 20,
                   ),
@@ -72,7 +84,7 @@ class _UserProfileState extends State<UserProfile> {
                   const SizedBox(
                     height: 20,
                   ),
-                  _getRowWidget(Icons.password, '********')
+                  // _getRowWidget(Icons.password, '********')
                 ],
               ),
             ),
@@ -109,7 +121,8 @@ class _UserProfileState extends State<UserProfile> {
 
   Widget _getRowWidget(IconData icon, String fieldName) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(
           icon,
@@ -121,7 +134,7 @@ class _UserProfileState extends State<UserProfile> {
         Text(
           fieldName,
           style: const TextStyle(
-              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20),
+              fontWeight: FontWeight.bold, color: Colors.white, fontSize: 15),
         )
       ],
     );
