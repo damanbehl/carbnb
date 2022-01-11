@@ -23,7 +23,7 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
     Future.delayed(Duration.zero, () {
       final args =
-          ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+          ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
       String productId = args["product_id"] ?? "";
       getCar(productId);
     });
@@ -125,9 +125,12 @@ class _ProductPageState extends State<ProductPage> {
             productData["description"] != null
                 ? productData["description"]
                 : "",
-            textAlign: TextAlign.justify,
+            textAlign: TextAlign.left,
             style: TextStyle(
-                color: constant.productBodyColor, fontSize: 14, height: 1.5),
+                color: Colors.black,
+                fontSize: 20,
+                height: 1.5,
+                fontWeight: FontWeight.w700),
           ),
           SizedBox(height: 20),
           property()

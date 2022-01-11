@@ -1,10 +1,12 @@
-import 'package:carbnb/components/news_card.dart';
+// import 'package:carbnb/components/news_card.dart';
+import 'package:carbnb/components/row_news_card.dart';
 import 'package:flutter/material.dart';
 import 'components/uility_ui.dart' as utilUI;
 import 'constant.dart' as constant;
 import 'dart:convert' as convert;
 import 'components/radio_button.dart' as RBD;
 import 'package:flutter/services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
@@ -16,10 +18,11 @@ class NewsPage extends StatefulWidget {
 class _NewsPageState extends State<NewsPage> {
   bool isLoading = false;
   List<dynamic> cars = [];
+  List<dynamic> cardList = [];
 
   @override
   void initState() {
-    _getMoreData();
+    _getAPIData(0);
     super.initState();
   }
 
@@ -114,8 +117,16 @@ class _NewsPageState extends State<NewsPage> {
                         return _buildProgressIndicator();
                       } else {
                         print('Rendering');
-                        return Image(
-                            image: NetworkImage(cars[index]['image_url']));
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/productPage',
+                                arguments: {"product_id": cars[index]["_id"]});
+                          },
+                          child: Image(
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width * 0.90,
+                              image: NetworkImage(cars[index]['image_url'])),
+                        );
                       }
                     })),
             Positioned(
@@ -131,12 +142,13 @@ class _NewsPageState extends State<NewsPage> {
                 )),
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.13,
-              child: const NewsCard(),
+              child: RowNewsCard(
+                  rowList: cardList.length > 0 ? cardList.sublist(0, 2) : []),
             )
           ],
         ),
-        const NewsCard(),
-        const NewsCard()
+        RowNewsCard(rowList: cardList.length > 0 ? cardList.sublist(2, 4) : []),
+        RowNewsCard(rowList: cardList.length > 0 ? cardList.sublist(4) : [])
       ],
     ));
   }
@@ -188,6 +200,43 @@ class _NewsPageState extends State<NewsPage> {
         print('Request failed with status: ${response["statusCode"]}.');
       }
     }
+  }
+
+  void _getAPIData(int offset) async {
+    try {
+      if (!isLoading) {
+        setState(() {
+          isLoading = true;
+        });
+        CollectionReference _collectionRef =
+            FirebaseFirestore.instance.collection('cars');
+        QuerySnapshot querySnapshot = await _collectionRef.limit(10).get();
+        // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+        var singleElem;
+        final allData = querySnapshot.docs.map((doc) {
+          singleElem = doc.data() as Map<String, dynamic>;
+          singleElem["image_url"] =
+              utilUI.generateImageUrl(singleElem["main_image"]);
+          singleElem["_id"] = doc.reference.id.toString();
+          return singleElem;
+        }).toList();
+        final sliderList = allData.sublist(0, 4);
+        final second = allData.sublist(4);
+        setState(() {
+          isLoading = false;
+          cars.addAll(sliderList);
+          cardList.addAll(second);
+          // offset = offset + 10;
+        });
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    // Get data from docs and convert map to List
+    // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+
+    // print(allData);
   }
 
   Widget _buildProgressIndicator() {
