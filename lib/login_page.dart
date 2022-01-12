@@ -224,7 +224,12 @@ class _LoginPageState extends State<LoginPage> {
         if (args["source"] == "profile_page") {
           Navigator.pushReplacementNamed(context, '/userProfile');
         } else {
-          Navigator.pushReplacementNamed(context, '/paymentmethod');
+          if (prefs.get("product_id") == null ||
+              prefs.get("product_id").toString().isEmpty) {
+            Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
+          } else {
+            Navigator.pushReplacementNamed(context, '/paymentmethod');
+          }
         }
         setState(() {
           isLoading = false;

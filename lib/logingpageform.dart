@@ -229,7 +229,8 @@ class _logingpageformState extends State<logingpageform> {
           ),
           duration: Duration(seconds: 5),
         ));
-        Navigator.pushReplacementNamed(context, '/login');
+        Navigator.pushReplacementNamed(context, '/login',
+            arguments: {"source": "registration_page"});
         setState(() {
           isloading = false;
         });

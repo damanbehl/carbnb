@@ -241,6 +241,12 @@ class _paymentmethodState extends State<paymentmethod> {
                                       });
                                       print("adding for the first time");
                                     }
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    prefs.remove("product_id");
+                                    prefs.remove("insurance_price");
+                                    prefs.remove("car_price");
+                                    prefs.remove("insurance_id");
                                     Navigator.pushReplacementNamed(
                                         context, '/paymentConfirmation',
                                         arguments: postObject);
