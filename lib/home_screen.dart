@@ -73,6 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 heading: cars[index]['name'],
                 subHeading: cars[index]['brand'],
                 cardImage: cars[index]['image_url'],
+                price: cars[index]['price_numerical'],
                 supportingText: cars[index]['description']);
           }
         },

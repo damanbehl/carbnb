@@ -1,6 +1,7 @@
 import 'package:carbnb/components/common_appbar.dart';
 import 'package:flutter/material.dart';
 import 'data_model/insurance_screen_args.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CarInsuranceDescription extends StatelessWidget {
   const CarInsuranceDescription({Key? key}) : super(key: key);
@@ -42,10 +43,11 @@ class CarInsuranceDescription extends StatelessWidget {
                             fontWeight: FontWeight.bold, fontSize: 30.0),
                       ),
                       Text(args.description),
-                      Text("Price\$ \t" + args.price, style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20
-                      ),),
+                      Text(
+                        "Price\$ \t" + args.price,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20),
+                      ),
                       const Spacer(),
                       Row(
                           mainAxisSize: MainAxisSize.max,
@@ -65,7 +67,13 @@ class CarInsuranceDescription extends StatelessWidget {
                             Expanded(
                               child: _getButton(
                                   buttonText: 'Select',
-                                  onTap: () {
+                                  onTap: () async {
+                                    SharedPreferences prefs =
+                                        await SharedPreferences.getInstance();
+                                    await prefs.setString(
+                                        'insurance_id', args.id);
+                                    await prefs.setString(
+                                        'insurance_price', args.price);
                                     Navigator.pushNamed(context, '/splash',
                                         arguments: {"direction": "forward"});
                                   }),

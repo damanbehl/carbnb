@@ -1,5 +1,6 @@
 import 'package:carbnb/constant.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class InputField extends StatelessWidget {
   String headerText;
@@ -256,4 +257,29 @@ bool validatePssword(String value) {
 
 String generateImageUrl(String imageName) {
   return "https://firebasestorage.googleapis.com/v0/b/carbnb-cf74d.appspot.com/o/cars%2F$imageName?alt=media&token=$storageKey";
+}
+
+Future<bool> checkIfDocExists(String docId, String collectionName) async {
+  try {
+    // Get reference to Firestore collection
+    var collectionRef = FirebaseFirestore.instance.collection(collectionName);
+
+    var doc = await collectionRef.doc(docId).get();
+    return doc.exists;
+  } catch (e) {
+    throw e;
+  }
+}
+
+DocumentReference<Map<String, dynamic>> getDocReference(
+    String docId, String collectionName) {
+  try {
+    // Get reference to Firestore collection
+    var collectionRef = FirebaseFirestore.instance.collection(collectionName);
+
+    var doc = collectionRef.doc(docId);
+    return doc;
+  } catch (e) {
+    throw e;
+  }
 }
