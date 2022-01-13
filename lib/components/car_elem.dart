@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CarElem extends StatelessWidget {
   final String heading;
@@ -6,6 +7,7 @@ class CarElem extends StatelessWidget {
   final String cardImage;
   final String supportingText;
   final String id;
+  final String price;
 
   const CarElem(
       {Key? key,
@@ -13,7 +15,8 @@ class CarElem extends StatelessWidget {
       required this.subHeading,
       required this.cardImage,
       required this.supportingText,
-      required this.id})
+      required this.id,
+      required this.price})
       : super(key: key);
 
   @override
@@ -43,9 +46,13 @@ class CarElem extends StatelessWidget {
             children: [
               TextButton(
                 child: const Text('Select'),
-                onPressed: () {
+                onPressed: () async {
+                  SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+                  await prefs.setString('product_id', id);
+                  await prefs.setString('car_price', price);
                   Navigator.pushNamed(context, '/insurancePage',
-                      arguments: {"product_id": id});
+                      arguments: {"product_id": id, "car_price": price});
                 },
               ),
               TextButton(

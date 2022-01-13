@@ -1,19 +1,22 @@
 import 'package:carbnb/paymentmethod.dart';
 import 'package:flutter/material.dart';
 import 'package:carbnb/data_model/insurance_screen_args.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InsuranceElem extends StatelessWidget {
   final String imageUrl;
   final String brand;
   final String description;
   final String price;
+  final String id;
 
   const InsuranceElem(
       {Key? key,
       required this.imageUrl,
       required this.brand,
       required this.description,
-      required this.price})
+      required this.price,
+      required this.id})
       : super(key: key);
 
   @override
@@ -61,7 +64,7 @@ class InsuranceElem extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, '/insuranceDetails',
                       arguments: InsuranceScreenArgs(
-                          brand, description, imageUrl, price));
+                          brand, description, imageUrl, price, id));
                 },
                 child: const Text("Read More"),
               ),
@@ -70,7 +73,11 @@ class InsuranceElem extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                       textStyle: const TextStyle(fontSize: 20)),
-                  onPressed: () {
+                  onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    await prefs.setString('insurance_id', id);
+                    await prefs.setString('insurance_price', price);
                     Navigator.pushNamed(context, '/splash',
                         arguments: {"direction": "forward"});
                   },

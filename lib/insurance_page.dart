@@ -66,6 +66,7 @@ class _InsurancePageState extends State<InsurancePage> {
               imageUrl: insuranceArr[index]['image_url'],
               brand: insuranceArr[index]["brand"],
               description: insuranceArr[index]["description"],
+              id: insuranceArr[index]["_id"],
               key: Key(insuranceArr[index]["_id"]));
         }
       },

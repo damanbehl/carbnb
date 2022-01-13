@@ -13,6 +13,8 @@ class PaymentConfirmation extends StatefulWidget {
 class _PaymentConfirmationState extends State<PaymentConfirmation> {
   @override
   Widget build(BuildContext context) {
+    final args =
+        ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     return Scaffold(
       body: SafeArea(
         child: Stack(
@@ -34,8 +36,8 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                         topLeft: Radius.circular(45),
                         topRight: Radius.circular(45))),
                 child: Column(
-                  children: const [
-                    CircleAvatar(
+                  children: [
+                    const CircleAvatar(
                       radius: 60,
                       child: Icon(
                         Icons.assignment_turned_in_sharp,
@@ -44,29 +46,33 @@ class _PaymentConfirmationState extends State<PaymentConfirmation> {
                       ),
                       backgroundColor: Color(0xFF47b881),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
-                    Text(
+                    const Text(
                       'Payment Done Successfully',
                       style: TextStyle(fontSize: 20),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 25,
                     ),
-                    Text('Transaction id :'),
-                    SizedBox(
+                    Text('Transaction id :' + args["transaction_id"]),
+                    const SizedBox(
                       height: 15,
                     ),
-                    Text('executed on :'),
-                    SizedBox(
+                    Text('executed on :' + args["date_rented"].toString()),
+                    const SizedBox(
                       height: 15,
                     ),
-                    Text('Booking id :'),
-
+                    Text('car_id_ref :' + args["car_id"]),
+                    ElevatedButton(
+                        onPressed: () {
+                          Navigator.pushNamedAndRemoveUntil(
+                              context, "/", (r) => false);
+                        },
+                        child: Text("Continue to Home"))
                   ],
                 ),
-
               ),
             ),
           ],

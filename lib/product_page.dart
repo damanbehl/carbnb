@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'constant.dart' as constant;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'data_model/product_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductPage extends StatefulWidget {
   const ProductPage({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _ProductPageState extends State<ProductPage> {
   var productData = {};
   Color selectedColor = Colors.blue;
   var isFavourite = false;
+  String productId = "";
 
   @override
   void initState() {
@@ -24,10 +26,9 @@ class _ProductPageState extends State<ProductPage> {
     Future.delayed(Duration.zero, () {
       final args =
           ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-      String productId = args["product_id"] ?? "";
+      productId = args["product_id"] ?? "";
       getCar(productId);
     });
-    // TODO: implement initState
   }
 
   @override
@@ -65,10 +66,12 @@ class _ProductPageState extends State<ProductPage> {
           ),
           Column(
             children: [
-              Text(productData["type"] != null ? productData["type"] : "",
-                  style: TextStyle(fontWeight: FontWeight.w900, fontSize: 16)),
+              Text(productData["type"] ?? "",
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w900, fontSize: 16)),
               Text(productData["type"] != null ? productData["name"] : "",
-                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 24))
+                  style: const TextStyle(
+                      fontWeight: FontWeight.w700, fontSize: 24))
             ],
           ),
           // Image.asset(
@@ -118,21 +121,19 @@ class _ProductPageState extends State<ProductPage> {
 
   Widget section() {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       child: Column(
         children: [
           Text(
-            productData["description"] != null
-                ? productData["description"]
-                : "",
+            productData["description"] ?? "",
             textAlign: TextAlign.left,
-            style: TextStyle(
+            style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 height: 1.5,
                 fontWeight: FontWeight.w700),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           property()
         ],
       ),
@@ -183,16 +184,17 @@ class _ProductPageState extends State<ProductPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Lease type",
+              Text(productData["price_tag_line"] ?? "",
                   style: TextStyle(
                       color: constant.productBlack,
                       fontWeight: FontWeight.bold,
                       fontSize: 16)),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
-                  padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
                   color: constant.productBodyColor.withOpacity(0.10),
-                  child: Text(
+                  child: const Text(
                     "Daily Rent",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ))
@@ -211,20 +213,24 @@ class _ProductPageState extends State<ProductPage> {
         children: [
           FlatButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 "Add to WishList +",
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
               )),
           ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/insurancePage');
+              onPressed: () async {
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                await prefs.setString('product_id', productId);
+                await prefs.setString(
+                    'car_price', productData["price_numerical"]);
+                Navigator.pushNamed(context, '/insurancePage', arguments: {
+                  "product_id": productId,
+                  "car_price": productData["price_numerical"]
+                });
               },
-              child: Text("Rent This car")),
-          Text(
-              productData["price_tag_line"] != null
-                  ? productData["price_tag_line"]
-                  : "",
-              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 12))
+              child: const Text("Rent This car")),
+          Text(productData["price_tag_line"] ?? "",
+              style: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12))
         ],
       ),
     );
