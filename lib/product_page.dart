@@ -90,11 +90,20 @@ class _ProductPageState extends State<ProductPage> {
         children: [
           // Image.asset(imagePath[colors.indexOf(selectedColor)]),
           productData["images_array"] != null
-              ? Image(
-                  image: NetworkImage(generateImageUrl(
-                      productData["images_array"]
-                          [colors.indexOf(selectedColor)])),
-                )
+              ?
+          // Image(
+          //         image:
+          //         NetworkImage(generateImageUrl(
+          //             productData["images_array"]
+          //                 [colors.indexOf(selectedColor)])
+          //         ),
+          //       )
+          FadeInImage.assetNetwork(
+            placeholder: 'assets/images/loading.gif',
+            image: generateImageUrl(
+                          productData["images_array"]
+                              [colors.indexOf(selectedColor)]),
+          )
               : CircularProgressIndicator(),
           Positioned(
               bottom: 10,

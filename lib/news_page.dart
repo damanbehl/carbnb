@@ -19,6 +19,7 @@ class _NewsPageState extends State<NewsPage> {
   bool isLoading = false;
   List<dynamic> cars = [];
   List<dynamic> cardList = [];
+  String filter = "";
 
   @override
   void initState() {
@@ -96,8 +97,8 @@ class _NewsPageState extends State<NewsPage> {
                             color: Colors.white,
                             overflow: TextOverflow.ellipsis),
                       ),
-                      onTap: () {
-                        _openSelectionFilters(context);
+                      onTap: () async {
+                        filter = await _openSelectionFilters(context);
                       },
                     ))),
             Positioned(
@@ -137,7 +138,8 @@ class _NewsPageState extends State<NewsPage> {
                 child: ElevatedButton(
                   child: const Text("Search"),
                   onPressed: () {
-                    Navigator.pushNamed(context, '/search');
+                    Navigator.pushNamed(context, '/search',
+                        arguments: {"type": filter});
                   },
                 )),
             Positioned(
@@ -153,8 +155,8 @@ class _NewsPageState extends State<NewsPage> {
     ));
   }
 
-  _openSelectionFilters(context) {
-    showDialog(
+  Future<String> _openSelectionFilters(context) async {
+    return await showDialog(
         context: context,
         builder: (BuildContext context) {
           return Dialog(
