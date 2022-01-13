@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:carbnb/news_page.dart';
 import 'user_profile.dart';
 import 'home_screen.dart';
+import 'order_history.dart';
+import 'constant.dart' as constant;
 
 class MainHomePage extends StatefulWidget {
   const MainHomePage({Key? key}) : super(key: key);
@@ -16,6 +18,7 @@ class _MainHomePageState extends State<MainHomePage> {
     NewsPage(),
     HomeScreen(),
     UserProfile(),
+    OrderHistory()
   ];
 
   void _onItemTapped(int index) {
@@ -31,23 +34,27 @@ class _MainHomePageState extends State<MainHomePage> {
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
+        items: <BottomNavigationBarItem>[
+          const BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
+            backgroundColor: Colors.black,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: const Icon(Icons.search),
             label: 'Search',
+            backgroundColor: constant.defaultColor,
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.supervised_user_circle),
             label: 'User',
+            backgroundColor: Colors.black,
           ),
-          // BottomNavigationBarItem(
-          //   icon: Icon(Icons.list),
-          //   label: 'Orders',
-          // ),
+          BottomNavigationBarItem(
+            icon: const Icon(Icons.list),
+            label: 'Orders',
+            backgroundColor: constant.defaultColor,
+          ),
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
