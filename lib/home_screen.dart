@@ -20,10 +20,10 @@ class _HomeScreenState extends State<HomeScreen> {
   final ScrollController _sc = ScrollController();
   bool isLoading = false;
   List<dynamic> cars = [];
+  String filter = "";
 
   @override
   void initState() {
-    _getAPIData(0);
     // _getMoreData(offset);
     super.initState();
     print("going to initialize state");
@@ -34,6 +34,12 @@ class _HomeScreenState extends State<HomeScreen> {
         _getAPIData(0);
       }
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    _getAPIData(0);
+    super.didChangeDependencies();
   }
 
   @override
@@ -110,6 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
   // }
 
   void _getAPIData(int offset) async {
+    var args = {};
+    if (ModalRoute.of(context)!.settings.arguments != null) {
+      args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    }
+
+    filter = args["type"] ?? "";
+    print("filter gotten" + filter);
     try {
       if (!isLoading) {
         setState(() {
@@ -117,7 +130,13 @@ class _HomeScreenState extends State<HomeScreen> {
         });
         CollectionReference _collectionRef =
             FirebaseFirestore.instance.collection('cars');
-        QuerySnapshot querySnapshot = await _collectionRef.get();
+        QuerySnapshot querySnapshot;
+        if (filter != "" && filter.length > 0) {
+          querySnapshot =
+              await _collectionRef.where('type', isEqualTo: filter).get();
+        } else {
+          querySnapshot = await _collectionRef.get();
+        }
         // final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
         var singleElem;
         final allData = querySnapshot.docs.map((doc) {

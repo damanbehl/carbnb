@@ -10,9 +10,8 @@ class RadioButton extends StatefulWidget {
 class _RadioButtonState extends State<RadioButton> {
   static List<String> categories = [
     "SUV",
-    "Pick up trucks",
-    "Sedans",
-    "limousines"
+    "PICKUP",
+    "SEDAN",
   ];
   String? _character = categories[0];
 
