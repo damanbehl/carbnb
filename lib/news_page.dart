@@ -109,7 +109,7 @@ class _NewsPageState extends State<NewsPage> {
                 child: ListView.builder(
                     scrollDirection: Axis.horizontal,
                     // shrinkWrap: true,
-                    itemCount: cars.length + 1,
+                    itemCount: cars.length,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8.0, vertical: 8.0),
                     itemBuilder: (BuildContext context, int index) {
@@ -145,12 +145,12 @@ class _NewsPageState extends State<NewsPage> {
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.13,
               child: RowNewsCard(
-                  rowList: cardList.length > 0 ? cardList.sublist(0, 2) : []),
+                  rowList: cardList.isNotEmpty ? cardList.sublist(0, 2) : []),
             )
           ],
         ),
-        RowNewsCard(rowList: cardList.length > 0 ? cardList.sublist(2, 4) : []),
-        RowNewsCard(rowList: cardList.length > 0 ? cardList.sublist(4) : [])
+        RowNewsCard(rowList: cardList.isNotEmpty ? cardList.sublist(2, 4) : []),
+        RowNewsCard(rowList: cardList.isNotEmpty ? cardList.sublist(4) : [])
       ],
     ));
   }
